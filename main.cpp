@@ -1,4 +1,4 @@
-// Jacob Tidwell 12/6/2020 //
+// Jacob Tidwell 12/12/2020 //
 
 #include <iostream>
 #include <fstream>
@@ -62,50 +62,34 @@ int main(){
     }
     cout << endl << endl;
     
-    place* tmp;
-    place* placePtrArr[numPlaces];
-    
-    for (int k = 0; k < numPlaces; k++){
-    placePtrArr[k] = &myPlaces[k];
-    }
-    
-    for (int j = 0; j < numPlaces; j++){
-        for (int i = 0; i < numPlaces - 1; i++){
-            if (placePtrArr[i]->plat < placePtrArr[i + 1]->plat){
-                tmp = placePtrArr[i];
-                placePtrArr[i] = placePtrArr[i + 1];
-                placePtrArr[i + 1] = tmp;
-                break;
-            }
+    for (int i = 0; i < n; i++){
+        int changer;
+        cout << myPlaces[i].pcode << " " << myPlaces[i].pname << " is linked to: " << myPlaces[i].d_link1 << " and " << myPlaces[i].d_link2 << endl;
+        cout << "Which links would you like to modify? 1 = change link #1, 2 = change link #2, 3 = change both, 0 = change none of the links." << endl;
+        cin >> changer;
+        if (changer == 1){
+            cout << "What would you like to change link #1 to?" << endl;
+            cin >> myPlaces[i].d_link1;
         }
-    }
-    
-    cout << "The order of the cities from north to south is: " << endl;
-    for (int i = 0; i < numPlaces; i++){
-        cout << placePtrArr[i]->pname << " " << placePtrArr[i]->plat << "  ";
+        if (changer == 2){
+            cout << "What would you like to change link #2 to?" << endl;
+            cin >> myPlaces[i].d_link2;
+        }
+        if (changer == 3){
+            cout << "What would you like to change link #1 to?" << endl;
+            cin >> myPlaces[i].d_link1;
+            cout << "What would you like to change link #2 to?" << endl;
+            cin >> myPlaces[i].d_link2;
+        }
+        if (changer == 0){
+            cout << "The links will remain unchanged." << endl;
+        }
+        cout << endl;
     }
     cout << endl;
     
-    for (int j = 0; j < numPlaces; j++){
-        for (int i = 0; i < numPlaces - 1; i++){
-            if (placePtrArr[i]->plng > placePtrArr[i + 1]->plng){
-                tmp = placePtrArr[i];
-                placePtrArr[i] = placePtrArr[i + 1];
-                placePtrArr[i + 1] = tmp;
-                break;
-            }
-        }
-    }
-    cout << endl;
-    
-    cout << "The order of the cities from east to west is: " << endl;
-    for (int i = 0; i < numPlaces; i++){
-        cout << placePtrArr[i]->pname << " " << placePtrArr[i]->plng << "  ";
-    }
-    cout << endl << endl << endl;
     
     double dist = 0;
-
     
     cout << "The current available flights are: ";
     for (int i = 0; i < n; i++){
@@ -128,10 +112,6 @@ int main(){
     }
     cout << endl;
     
-    /*for (int i = 0; i < n; i++){
-    cout << myPlaces[i].distLen1 << " " << myPlaces[i].distLen2 << endl;
-    }
-    cout << endl;*/
     
     int ccode1;
     int ccode2;
@@ -149,17 +129,18 @@ int main(){
             if (ccode2 == myPlaces[i].d_link1){
                 cout << "Destination reached!" << endl;
                 calDist = myPlaces[i].distLen1;
-                cout << calDist << endl;
+                cout << "The distance is: " << calDist << endl;
+                cout << "It took 1 hop." << endl;
             }
             if (ccode2 == myPlaces[i].d_link2){
                 cout << "Destination reached!" << endl;
                 calDist = myPlaces[i].distLen2;
-                cout << calDist << endl;
+                cout << "The distance is: " << calDist << endl;
+                cout << "It took 1 hop." << endl;
             }
         }
     }
     cout << endl;
-    cout << "Finished!" << endl;
 
     return 0;
 }
